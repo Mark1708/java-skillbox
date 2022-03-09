@@ -16,7 +16,6 @@ public class Main {
     private static int mode;
 
     public static void main(String[] args) {
-        // -s /Users/markguranov/Downloads/src -d /Users/markguranov/Downloads/dst -S 400 -m 2
         getInputData(args);
         File src = new File(srcPath);
         List<File> files = getFiles(src);

@@ -54,21 +54,10 @@ public class ImageResizer implements Runnable {
         duration = System.currentTimeMillis() - start;
     }
 
-    public static String getFileExtension(File file) {
-        String fileName = file.getName().toLowerCase(Locale.ROOT);
-        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-            return fileName.substring(fileName.lastIndexOf(".") + 1);
-        else return "";
-    }
-
-    public static boolean isAvailableExtension(File file) {
-        return availableExtension.contains(getFileExtension(file));
-    }
-
     // resize by nearest neighbor algorithm
     public void resizeImage(File oldImage) throws IOException {
         String extension = getFileExtension(oldImage);
-        String newName = oldImage.getName().substring(0, oldImage.getName().lastIndexOf('.')) + "_resized." + extension;
+        String newName = getNewName(oldImage, extension);
         BufferedImage bufferedImage = ImageIO.read(oldImage);
 
         int newHeight = (int) Math.round(
@@ -91,7 +80,7 @@ public class ImageResizer implements Runnable {
     // resize by imgscalr
     private void resizeImageScalr(File oldImage) throws IOException {
         String extension = getFileExtension(oldImage);
-        String newName = oldImage.getName().substring(0, oldImage.getName().lastIndexOf('.')) + "_resized." + extension;
+        String newName = getNewName(oldImage, extension);
         BufferedImage bufferedImage = ImageIO.read(oldImage);
 
         int newHeight = (int) Math.round(
@@ -107,7 +96,7 @@ public class ImageResizer implements Runnable {
     // resize by Graphics2D with RenderingHints
     private void resizeImageWithHint(File oldImage) throws IOException {
         String extension = getFileExtension(oldImage);
-        String newName = oldImage.getName().substring(0, oldImage.getName().lastIndexOf('.')) + "_resized." + extension;
+        String newName = getNewName(oldImage, extension);
         BufferedImage bufferedImage = ImageIO.read(oldImage);
 
         int newHeight = (int) Math.round(
@@ -125,5 +114,20 @@ public class ImageResizer implements Runnable {
         File newFile = new File(dstPath + '/' + newName);
         ImageIO.write(resizedImage, "png", newFile);
 //        logger.info("File: " + newFile.getName() + " reduced to size " + newWidth);
+    }
+
+    private String getNewName(File oldImage, String extension) {
+        return oldImage.getName().substring(0, oldImage.getName().lastIndexOf('.')) + "_resized." + extension;
+    }
+
+    public static String getFileExtension(File file) {
+        String fileName = file.getName().toLowerCase(Locale.ROOT);
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        else return "";
+    }
+
+    public static boolean isAvailableExtension(File file) {
+        return availableExtension.contains(getFileExtension(file));
     }
 }
