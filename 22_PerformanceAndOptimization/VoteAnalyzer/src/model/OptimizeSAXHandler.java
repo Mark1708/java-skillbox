@@ -15,7 +15,7 @@ public class OptimizeSAXHandler extends DefaultHandler {
     private Voter voter;
     private final SimpleDateFormat birthDayFormat;
     private final SimpleDateFormat visitDateFormat;
-    private HashMap<Voter, Integer> voterCounts;
+    private HashMap<Voter, Byte> voterCounts;
     private HashMap<Integer, WorkTime> voterStationWorkTimes;
 
     public OptimizeSAXHandler(SimpleDateFormat birthDayFormat, SimpleDateFormat visitDateFormat) {
@@ -32,7 +32,8 @@ public class OptimizeSAXHandler extends DefaultHandler {
                 Date birthdate = birthDayFormat.parse(attributes.getValue("birthDay"));
                 voter = new Voter(attributes.getValue("name"), birthdate);
             } else if (qName.equals("visit") && voter != null) {
-                voterCounts.put(voter, voterCounts.getOrDefault(voter, 0) + 1);
+                byte count = voterCounts.getOrDefault(voter, (byte) 0);
+                voterCounts.put(voter, (byte) (count + 1));
 
                 Integer station = Integer.parseInt(attributes.getValue("station"));
                 WorkTime workTime = voterStationWorkTimes.get(station);
@@ -59,7 +60,7 @@ public class OptimizeSAXHandler extends DefaultHandler {
         currentValue.append(ch, start, length);
     }
 
-    public HashMap<Voter, Integer> getVoterCounts() {
+    public HashMap<Voter, Byte> getVoterCounts() {
         return voterCounts;
     }
 

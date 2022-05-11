@@ -17,6 +17,21 @@ OptimizeSAXParser  -  res/data-18M.xml
     Memory usage: 1088585496 bytes	Duration: 1703 ms
     Memory usage: 284396896 bytes	Duration: 1587 ms
 */
+//Заменил Integer на Byte в мапе votersCount и изменить тип поля birthday в классе Voter с Date на String
+/*
+DOMParser  -  res/data-18M.xml
+Memory usage: 306328824 bytes	Duration: 3785 ms
+Memory usage: 30907576 bytes	Duration: 2202 ms
+Memory usage: 495490912 bytes	Duration: 2126 ms
+SAXParser  -  res/data-18M.xml
+Memory usage: 249532800 bytes	Duration: 1784 ms
+Memory usage: 236080440 bytes	Duration: 1748 ms
+Memory usage: 569771152 bytes	Duration: 1626 ms
+OptimizeSAXParser  -  res/data-18M.xml
+Memory usage: 436198632 bytes	Duration: 1678 ms
+Memory usage: 102799312 bytes	Duration: 1695 ms
+Memory usage: 492455160 bytes	Duration: 1597 ms
+ */
 public class Loader {
 
     public static void main(String[] args) {

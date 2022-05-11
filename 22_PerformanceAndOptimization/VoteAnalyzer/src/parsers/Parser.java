@@ -13,7 +13,7 @@ public class Parser {
     public static SimpleDateFormat visitDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
     private HashMap<Integer, WorkTime> voterStationWorkTimes;
-    private HashMap<Voter, Integer> voterCounts;
+    private HashMap<Voter, Byte> voterCounts;
     private final File file;
     private final String filePath;
 
@@ -28,7 +28,7 @@ public class Parser {
         return voterStationWorkTimes;
     }
 
-    public HashMap<Voter, Integer> getVoterCounts() {
+    public HashMap<Voter, Byte> getVoterCounts() {
         return voterCounts;
     }
 
@@ -36,7 +36,7 @@ public class Parser {
         this.voterStationWorkTimes = voterStationWorkTimes;
     }
 
-    public void setVoterCounts(HashMap<Voter, Integer> voterCounts) {
+    public void setVoterCounts(HashMap<Voter, Byte> voterCounts) {
         this.voterCounts = voterCounts;
     }
 
@@ -60,7 +60,7 @@ public class Parser {
 
         sb.append("Duplicated voters: \n");
         for (Voter voter : getVoterCounts().keySet()) {
-            Integer count = getVoterCounts().get(voter);
+            Integer count = getVoterCounts().get(voter).intValue();
             if (count > 1) {
                 sb.append("\t").append(voter).append(" - ").append(count).append("\n");
             }

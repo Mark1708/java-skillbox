@@ -13,7 +13,7 @@ public class SAXHandler extends DefaultHandler {
     private Voter voter;
     private final SimpleDateFormat birthDayFormat;
     private final SimpleDateFormat visitDateFormat;
-    private HashMap<Voter, Integer> voterCounts;
+    private HashMap<Voter, Byte> voterCounts;
     private HashMap<Integer, WorkTime> voterStationWorkTimes;
 
     public SAXHandler(SimpleDateFormat birthDayFormat, SimpleDateFormat visitDateFormat) {
@@ -30,8 +30,8 @@ public class SAXHandler extends DefaultHandler {
                 Date birthdate = birthDayFormat.parse(attributes.getValue("birthDay"));
                 voter = new Voter(attributes.getValue("name"), birthdate);
             } else if (qName.equals("visit") && voter != null) {
-                int count = voterCounts.getOrDefault(voter, 0);
-                voterCounts.put(voter, count + 1);
+                byte count = voterCounts.getOrDefault(voter, (byte) 0);
+                voterCounts.put(voter, (byte) (count + 1));
 
                 Integer station = Integer.parseInt(attributes.getValue("station"));
                 Date time = visitDateFormat.parse(attributes.getValue("time"));
@@ -54,7 +54,7 @@ public class SAXHandler extends DefaultHandler {
         }
     }
 
-    public HashMap<Voter, Integer> getVoterCounts() {
+    public HashMap<Voter, Byte> getVoterCounts() {
         return voterCounts;
     }
 

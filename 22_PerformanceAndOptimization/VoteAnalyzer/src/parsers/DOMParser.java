@@ -43,8 +43,8 @@ public class DOMParser extends Parser{
                     .parse(attributes.getNamedItem("birthDay").getNodeValue());
 
             Voter voter = new Voter(name, birthDay);
-            Integer count = super.getVoterCounts().get(voter);
-            super.getVoterCounts().put(voter, count == null ? 1 : count + 1);
+            Byte count = super.getVoterCounts().get(voter);
+            super.getVoterCounts().put(voter,count == null ? 1 : (byte) (count.intValue() + 1));
         }
     }
 

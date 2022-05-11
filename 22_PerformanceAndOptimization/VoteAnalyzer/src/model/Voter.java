@@ -6,11 +6,11 @@ import java.util.Date;
 public class Voter {
 
     private String name;
-    private Date birthDay;
+    private String birthDay;
 
     public Voter(String name, Date birthDay) {
         this.name = name;
-        this.birthDay = birthDay;
+        this.birthDay = new SimpleDateFormat("yyyy.MM.dd").format(birthDay);
     }
 
     @Override
@@ -29,15 +29,14 @@ public class Voter {
     }
 
     public String toString() {
-        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy.MM.dd");
-        return name + " (" + dayFormat.format(birthDay) + ")";
+        return name + " (" + birthDay + ")";
     }
 
     public String getName() {
         return name;
     }
 
-    public Date getBirthDay() {
+    public String getBirthDay() {
         return birthDay;
     }
 }

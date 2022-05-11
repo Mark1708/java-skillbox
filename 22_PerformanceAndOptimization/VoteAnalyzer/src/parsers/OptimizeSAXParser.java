@@ -43,7 +43,7 @@ public class OptimizeSAXParser extends Parser{
 
         sb.append("Duplicated voters: \n");
         for (Voter voter : getVoterCounts().keySet()) {
-            Integer count = getVoterCounts().get(voter);
+            Integer count = getVoterCounts().get(voter).intValue();
             if (count > 1) {
                 sb.append("\t").append(voter).append(" - ").append(count).append("\n");
             }
