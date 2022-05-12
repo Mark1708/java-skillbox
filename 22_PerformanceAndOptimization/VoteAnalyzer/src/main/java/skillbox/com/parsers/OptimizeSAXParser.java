@@ -1,9 +1,10 @@
-package parsers;
+package skillbox.com.parsers;
 
-import model.OptimizeSAXHandler;
-import model.Voter;
-import model.WorkTime;
+
 import org.xml.sax.SAXException;
+import skillbox.com.model.OptimizeSAXHandler;
+import skillbox.com.model.Voter;
+import skillbox.com.model.WorkTime;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
@@ -31,14 +32,14 @@ public class OptimizeSAXParser extends Parser{
     }
 
     @Override
-    public void printResults() {
+    public void printResults(boolean isTest) {
         StringBuilder sb = new StringBuilder();
         sb.append("Voting station work times: \n");
         for (Integer votingStation : getVoterStationWorkTimes().keySet()) {
             WorkTime workTime = getVoterStationWorkTimes().get(votingStation);
             sb.append("\t").append(votingStation).append(" - ").append(workTime).append("\n");
         }
-        System.out.print(sb);
+        if (!isTest) System.out.print(sb);
         sb.delete(0, sb.length());
 
         sb.append("Duplicated voters: \n");
@@ -48,7 +49,7 @@ public class OptimizeSAXParser extends Parser{
                 sb.append("\t").append(voter).append(" - ").append(count).append("\n");
             }
         }
-        System.out.print(sb);
+        if (!isTest) System.out.print(sb);
         sb.delete(0, sb.length());
     }
 }

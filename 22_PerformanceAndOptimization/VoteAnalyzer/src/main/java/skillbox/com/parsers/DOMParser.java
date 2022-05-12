@@ -1,7 +1,6 @@
-package parsers;
+package skillbox.com.parsers;
 
-import model.Voter;
-import model.WorkTime;
+import skillbox.com.model.WorkTime;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -9,6 +8,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class DOMParser extends Parser{
@@ -25,7 +25,7 @@ public class DOMParser extends Parser{
             Document doc = db.parse(super.getFile());
 
             findEqualVoters(doc);
-            fixWorkTimes(doc);
+//            fixWorkTimes(doc);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,13 +39,16 @@ public class DOMParser extends Parser{
             NamedNodeMap attributes = node.getAttributes();
 
             String name = attributes.getNamedItem("name").getNodeValue();
-            Date birthDay = birthDayFormat
-                    .parse(attributes.getNamedItem("birthDay").getNodeValue());
+//            Date birthDay = birthDayFormat
+//                    .parse(attributes.getNamedItem("birthDay").getNodeValue());
 
-            Voter voter = new Voter(name, birthDay);
-            Byte count = super.getVoterCounts().get(voter);
-            super.getVoterCounts().put(voter,count == null ? 1 : (byte) (count.intValue() + 1));
+//            Voter voter = new Voter(name, birthDay);
+//            Byte count = super.getVoterCounts().get(voter);
+//            super.getVoterCounts().put(voter,count == null ? 1 : (byte) (count.intValue() + 1));
+            String birthDay = attributes.getNamedItem("birthDay").getNodeValue();
+            DBConnection.countVoter(name, birthDay);
         }
+        DBConnection.executeMultiInsertVoters();
     }
 
     private void fixWorkTimes(Document doc) throws Exception {
@@ -63,6 +66,15 @@ public class DOMParser extends Parser{
                 super.getVoterStationWorkTimes().put(station, workTime);
             }
             workTime.addVisitTime(time.getTime());
+        }
+    }
+
+    @Override
+    public void printResults(boolean isTest) {
+        try {
+            DBConnection.printVoterCounts(isTest);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,4 +1,4 @@
-package model;
+package skillbox.com.model;
 
 import java.util.Date;
 import java.util.TreeSet;

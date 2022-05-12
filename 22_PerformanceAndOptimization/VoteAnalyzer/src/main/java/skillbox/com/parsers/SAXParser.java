@@ -1,7 +1,7 @@
-package parsers;
+package skillbox.com.parsers;
 
-import model.SAXHandler;
 import org.xml.sax.SAXException;
+import skillbox.com.model.SAXHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;

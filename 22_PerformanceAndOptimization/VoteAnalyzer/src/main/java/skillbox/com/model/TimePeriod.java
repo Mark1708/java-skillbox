@@ -1,4 +1,4 @@
-package model;
+package skillbox.com.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
