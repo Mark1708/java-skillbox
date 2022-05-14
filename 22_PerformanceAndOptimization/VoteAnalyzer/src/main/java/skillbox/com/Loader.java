@@ -77,17 +77,17 @@ public class Loader {
             avgParseTime += System.currentTimeMillis() - start;
             avgParseUsage += Math.abs(getUsage() - usage);
 
-            start = System.currentTimeMillis();
-            usage = getUsage();
-            testParser.printResults(true);
-            avgPrintingTime += System.currentTimeMillis() - start;
-            avgPrintingUsage += Math.abs(getUsage() - usage);
+//            start = System.currentTimeMillis();
+//            usage = getUsage();
+//            testParser.printResults(true);
+//            avgPrintingTime += System.currentTimeMillis() - start;
+//            avgPrintingUsage += Math.abs(getUsage() - usage);
         }
         System.out.println(parserName + "  -  " + fileName);
         statistics.append("\n\tParsing\n\tMemory usage: ").append(avgParseUsage / testCount)
                 .append(" bytes\tDuration: ").append(avgParseTime / testCount).append(" ms\n");
-        statistics.append("\tPrinting\n\tMemory usage: ").append(avgPrintingUsage / testCount)
-                .append(" bytes\tDuration: ").append(avgPrintingTime / testCount).append(" ms\n");
+//        statistics.append("\tPrinting\n\tMemory usage: ").append(avgPrintingUsage / testCount)
+//                .append(" bytes\tDuration: ").append(avgPrintingTime / testCount).append(" ms\n");
         System.out.println(statistics);
     }
 

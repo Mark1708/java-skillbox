@@ -30,17 +30,13 @@ public class DBConnection {
                         "id INT NOT NULL AUTO_INCREMENT, " +
                         "name TINYTEXT NOT NULL, " +
                         "birthDate DATE NOT NULL, " +
-                        "`count` INT NOT NULL, " +
-                        "PRIMARY KEY(id), " +
-                        "KEY(name(50)), " +
-                        "UNIQUE KEY name_date(name(50), birthDate))");
+                        "PRIMARY KEY(id))");
                 connection.createStatement().execute("DROP TABLE IF EXISTS work_time");
                 connection.createStatement().execute("CREATE TABLE work_time(" +
                         "id INT NOT NULL AUTO_INCREMENT, " +
                         "station INT NOT NULL, " +
                         "visitTime DATETIME NOT NULL, " +
-                        "PRIMARY KEY(id), " +
-                        "KEY(station))");
+                        "PRIMARY KEY(id))");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -52,8 +48,8 @@ public class DBConnection {
         birthDay = birthDay.replace('.', '-');
 
         insertQueryCounts.append((insertQueryCounts.length() == 0 ? "" : ", "));
-        insertQueryCounts.append("('" + name + "', '" + birthDay + "', 1)");
-        if (insertQueryCounts.toString().length() > 1_000_000){
+        insertQueryCounts.append("('" + name + "', '" + birthDay + "')");
+        if (insertQueryCounts.toString().length() > 10_000_000){
             executeMultiInsertVoters();
             insertQueryCounts = new StringBuilder();
         }
@@ -61,9 +57,8 @@ public class DBConnection {
 
     public static void executeMultiInsertVoters() throws SQLException {
         try {
-            String sql = "INSERT INTO voter_count(name, birthDate, `count`) " +
-                    "VALUES" + insertQueryCounts.toString() +
-                    "ON DUPLICATE KEY UPDATE `count` = `count` + 1";
+            String sql = "INSERT INTO voter_count(name, birthDate) " +
+                    "VALUES" + insertQueryCounts.toString();
             DBConnection.getConnection().createStatement().execute(sql);
 
         } catch (java.lang.OutOfMemoryError e) {
@@ -99,7 +94,7 @@ public class DBConnection {
 
         insertQueryWorkTime.append((insertQueryWorkTime.length() == 0 ? "" : ", "));
         insertQueryWorkTime.append("(" + station + ", '" + visitTime + "')");
-        if (insertQueryWorkTime.toString().length() > 1_000_000){
+        if (insertQueryWorkTime.toString().length() > 10_000_000){
             executeMultiInsertWorkTime();
             insertQueryWorkTime = new StringBuilder();
         }

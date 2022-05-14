@@ -36,7 +36,7 @@ public class FastestSAXParser extends Parser {
     @Override
     public void printResults(boolean isTest) {
         try {
-            DBConnection.printVoterCounts(isTest);
+//            DBConnection.printVoterCounts(isTest);
             DBConnection.printWorkTimes(isTest);
         } catch (SQLException | ParseException e) {
             e.printStackTrace();
